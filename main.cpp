@@ -5,14 +5,13 @@ int main(int argc, char** argv) {
     unsigned long long n;
 
     std::cout << "Entrez votre nombre: " << std::endl;
-    std::cin >> n;  // Corrected input statement
+    std::cin >> n;  
 
     i = 1;
     do {
-        i = i * n;  // Corrected multiplication operator
+        i = i * n;  
         n = n - 1;
-    } while (n > 1);  // Corrected condition to continue while n is greater than 1
+    } while (n > 1); 
 
-    std::cout << "Le résultat de n! est: " << i << std::endl;  // Corrected output statement
-    return 0;
+    std::cout << "LE RESULTAT dU FACTORIEL DE VOTRE NOMBRE EST : " << i << std::endl;  
 }
