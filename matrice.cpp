@@ -132,7 +132,7 @@ int main(int argc, char** argv) {
 
         // affichage de la trace 
          std::cout << std::endl;
-         std::cout << "le trace de la matrice 1 est  :"<< trac3(ma3)<< std::endl;
+         std::cout << "le trace de matrice 1 est  :"<< trac3(ma3)<< std::endl;
           std::cout << "le trace de la matrice 2 est  :"<< trac3(ma4)<< std::endl;
      
 
