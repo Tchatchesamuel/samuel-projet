@@ -194,17 +194,6 @@ int main() {
         std::cout<<"votre mots en minuscule  est  "<<m<<std::endl;
             }
             break;
-            case 9: { 
-  std::cout << "Entrez une phrase : ";
-    std::cin.ignore(); 
-    std::cin.getline(m, tail);
-std::cout << "Entrez l'indice de debut : ";
-    std::cin >> i; 
-    std::cout << "Entrez la longueur de la sous-chaine : ";
-    std::cin >> n; 
-   sous_chaine(m, co, i, n);
-    std::cout << "Sous-chaîne extraite : " << co << std::endl;
-} break;
         default:
             std::cout << "Option non valide !" << std::endl;
             break;
