@@ -1,0 +1,216 @@
+#include <iostream>
+
+// Fonction pour calculer la longueur d'une chaîne 
+int longueur(const char** chaine) {
+    int i = 0;
+    while (chaine[i] != '\0') {
+           std::cout << " e"
+                             "les lettre " << chaine[i]  << "." << std::endl;
+        i++;
+    }
+    return i;
+}
+
+// Fonction pour copier une chaîne 
+void copie(char* dest, const char* source) {
+    int i = 0;
+    while (source[i] != '\0') {
+        dest[i] = source[i];
+        i++;
+    }
+    dest[i] = '\0';
+}
+
+// Fonction pour concaténer deux chaînes 
+void concatene(char* dest, const char* source) {
+    int i = 0, j = 0;
+   
+    while (dest[i] != '\0') {
+        i++;
+    }
+    while (source[j] != '\0') {
+        dest[i] = source[j];
+        i++;
+        j++;
+    }
+    dest[i] = '\0'; 
+}
+
+// Fonction pour comparer deux chaînes 
+int compare(const char* chaine1, const char* chaine2) {
+    int i = 0;
+    while (chaine1[i] != '\0' && chaine2[i] != '\0') {
+        if (chaine1[i] != chaine2[i]) {
+            return chaine1[i] - chaine2[i];
+        }
+        i++;
+    }
+    return longueur(chaine1) - longueur(chaine2); 
+}
+
+// Fonction pour rechercher un caractère dans une chaîne 
+const char* cherche(const char* chaine, char c) {
+    int i = 0;
+    while (chaine[i] != '\0') {
+        if (chaine[i] == c) {
+            return &chaine[i];
+        }
+        i++;
+    }
+    return nullptr; 
+}
+//Fonction qui inverse une chaine de caractere
+void inverse(char*mots){
+	int lon=longueur(mots);
+	int d=0,f=lon-1;
+	while (d<f){
+		char t=mots[d];
+		mots[d]=mots[f];
+		mots[f]=t;
+		d++;
+		f--;
+		}
+	}
+	//conversion en magiscule
+	void magiscul(char*mots){
+		int i=0;
+		while(mots[i]!='\0'){
+			if(mots[i]>='a'&&mots[i]<='z'){
+				mots[i]=mots[i]-32;
+				}
+					i++;
+			}
+		}
+		//convertire en minuscule
+		void minus(char*mots){ 
+			int i=0;
+		while(mots[i]!='\0'){
+			if(mots[i]>='A'&&mots[i]<='Z'){
+				mots[i]=mots[i]+32;
+				}
+					i++;
+			}
+		}
+		
+// Fonction pour extraire une sous-chaîne
+void sous_chaine(const char* source, char* dest, int debut, int longe) {
+    int i = 0;
+    longe=longueur(source);
+
+    if (debut< 0 || debut >= i || longe <= 0 || debut + longe > i) {
+      std::cout << "Erreur : indices invalides." << std::endl;
+        dest[0] = '\0'; 
+        return;
+    }
+    for (int j = 0; j < longe; j++) {
+        dest[j] = source[debut + j];
+    }
+    dest[longe] = '\0';
+}
+
+int main() {
+     const int tail=1000;
+    int choix,n,i;
+    char m[tail], co[tail], a,sous,r;
+      std::cout << "Entrer :\n"
+              << "1 : pour savoir la longueur du mot\n"
+              << "2 : pour copier votre mot\n"
+              << "3 : pour la concatenation de deux mots\n"
+              << "4 : pour la comparaison de deux mots\n"
+              << "5 : pour la recherche d'un caractere\n"
+              << "6 : pour inverser le mot\n"<<"7 : pour convertir le mots en magiscule\n"<<"8 : pour convertire le mots en minuscule\n" <<"9 : pour extraire une partie d'une phrase\n"<<std::endl;
+    std::cin >> choix;
+
+    switch (choix) {
+        case 1: { // Longueur
+            std::cout << "Entrer votre mot : ";
+            std::cin >> m;
+            int lon = longueur(m);
+            std::cout << "Le nombre de caractères de votre mot est : " << lon << std::endl;
+        } break;
+
+        case 2: { // Copie
+            std::cout << "Entrer votre mot : ";
+            std::cin >> m;
+            copie(co, m);
+            std::cout << "Votre mot est : " << m << "\nEt sa copie est : " << co << std::endl;
+        } break;
+
+        case 3: { // Concatenation
+            std::cout << "Entrer le premier mot : ";
+            std::cin >> m;
+            std::cout << "Entrer le deuxième mot : ";
+            std::cin >> co;
+            concatene(m, co);
+            std::cout << "La concatenation de vos deux mots est : " << m << std::endl;
+        } break;
+
+        case 4: { // Comparaison
+            std::cout << "Entrer le premier mot : ";
+            std::cin >> m;
+            std::cout << "Entrer le deuxième mot : ";
+            std::cin >> co;
+            int result = compare(m, co);
+            if (result == 0) {
+                std::cout << "Les deux mots sont égaux." << std::endl;
+            } else if (result < 0) {
+                std::cout << m << " est lexicographiquement inférieur à " << co << "." << std::endl;
+            } else {
+                std::cout << m << " est lexicographiquement supérieur à " << co << "." << std::endl;
+            }
+        } break;
+
+        case 5: { // Recherche de caractère
+            std::cout << "Entrer votre mot : ";
+            std::cin >> m;
+            std::cout << "Entrer le caractère à rechercher : ";
+            std::cin >> r;
+            const char* position = cherche(m, r);
+            if (position != nullptr) {
+                std::cout << "Le caractère '" << r << "' se trouve à la position " << (position - m + 1) << " dans le mot." << std::endl;
+            } else {
+                std::cout << "Le caractère '" << r << "' n'existe pas dans le mot." << std::endl;
+            }
+        } break;
+        case 6:{ //inverse
+        int lon;
+        std::cout<<"entrer votre mot"<<std::endl;
+        std::cin>>m;
+        inverse(m);
+        std::cout<<"l'inverse de votre mots est "<<m<<std::endl;
+            }
+         break;
+         case 7:{ 
+            std::cout<<"entrer votre mot"<<std::endl;
+        std::cin>>m;
+        magiscul(m);
+        std::cout<<"votre mots en magiscule  est  "<<m<<std::endl;
+            }
+            break;
+            case 8:{ 
+            std::cout<<"entrer votre mot"<<std::endl;
+        std::cin>>m;
+        minus(m);
+        std::cout<<"votre mots en minuscule  est  "<<m<<std::endl;
+            }
+            break;
+            case 9: { 
+  std::cout << "Entrez une phrase : ";
+    std::cin.ignore(); 
+    std::cin.getline(m, tail);
+std::cout << "Entrez l'indice de debut : ";
+    std::cin >> i; 
+    std::cout << "Entrez la longueur de la sous-chaine : ";
+    std::cin >> n; 
+   sous_chaine(m, co, i, n);
+    std::cout << "Sous-chaîne extraite : " << co << std::endl;
+} break;
+        default:
+            std::cout << "Option non valide !" << std::endl;
+            break;
+    }
+
+    return 0;
+}
+
+
