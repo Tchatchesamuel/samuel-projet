@@ -1,17 +1,15 @@
 #include <iostream>
-
-// Fonction pour calculer la longueur d'une chaîne 
-int longueur(const char** chaine) {
+#include <cstring> 
+// Fonction pour calculer la longueur d'une chaîne
+int longueur(const char* chaine) {
     int i = 0;
     while (chaine[i] != '\0') {
-           std::cout << " e"
-                             "les lettre " << chaine[i]  << "." << std::endl;
         i++;
     }
     return i;
 }
 
-// Fonction pour copier une chaîne 
+// Fonction pour copier une chaîne
 void copie(char* dest, const char* source) {
     int i = 0;
     while (source[i] != '\0') {
@@ -21,22 +19,19 @@ void copie(char* dest, const char* source) {
     dest[i] = '\0';
 }
 
-// Fonction pour concaténer deux chaînes 
+// Fonction pour concaténer deux chaînes
 void concatene(char* dest, const char* source) {
-    int i = 0, j = 0;
-   
-    while (dest[i] != '\0') {
-        i++;
-    }
+    int i = longueur(dest);
+    int j = 0;
     while (source[j] != '\0') {
         dest[i] = source[j];
         i++;
         j++;
     }
-    dest[i] = '\0'; 
+    dest[i] = '\0';
 }
 
-// Fonction pour comparer deux chaînes 
+// Fonction pour comparer deux chaînes
 int compare(const char* chaine1, const char* chaine2) {
     int i = 0;
     while (chaine1[i] != '\0' && chaine2[i] != '\0') {
@@ -45,10 +40,10 @@ int compare(const char* chaine1, const char* chaine2) {
         }
         i++;
     }
-    return longueur(chaine1) - longueur(chaine2); 
+    return longueur(chaine1) - longueur(chaine2);
 }
 
-// Fonction pour rechercher un caractère dans une chaîne 
+// Fonction pour rechercher un caractère dans une chaîne
 const char* cherche(const char* chaine, char c) {
     int i = 0;
     while (chaine[i] != '\0') {
@@ -57,68 +52,77 @@ const char* cherche(const char* chaine, char c) {
         }
         i++;
     }
-    return nullptr; 
+    return nullptr;
 }
-//Fonction qui inverse une chaine de caractere
-void inverse(char*mots){
-	int lon=longueur(mots);
-	int d=0,f=lon-1;
-	while (d<f){
-		char t=mots[d];
-		mots[d]=mots[f];
-		mots[f]=t;
-		d++;
-		f--;
-		}
-	}
-	//conversion en magiscule
-	void magiscul(char*mots){
-		int i=0;
-		while(mots[i]!='\0'){
-			if(mots[i]>='a'&&mots[i]<='z'){
-				mots[i]=mots[i]-32;
-				}
-					i++;
-			}
-		}
-		//convertire en minuscule
-		void minus(char*mots){ 
-			int i=0;
-		while(mots[i]!='\0'){
-			if(mots[i]>='A'&&mots[i]<='Z'){
-				mots[i]=mots[i]+32;
-				}
-					i++;
-			}
-		}
-		
-// Fonction pour extraire une sous-chaîne
-void sous_chaine(const char* source, char* dest, int debut, int longe) {
-    int i = 0;
-    longe=longueur(source);
 
-    if (debut< 0 || debut >= i || longe <= 0 || debut + longe > i) {
-      std::cout << "Erreur : indices invalides." << std::endl;
-        dest[0] = '\0'; 
+// Fonction pour inverser une chaîne
+void inverse(char* mots) {
+    int lon = longueur(mots);
+    int d = 0, f = lon - 1;
+    while (d < f) {
+        char t = mots[d];
+        mots[d] = mots[f];
+        mots[f] = t;
+        d++;
+        f--;
+    }
+}
+
+// Fonction pour convertir en majuscules
+void magiscul(char* mots) {
+    int i = 0;
+    while (mots[i] != '\0') {
+        if (mots[i] >= 'a' && mots[i] <= 'z') {
+            mots[i] -= 32;
+        }
+        i++;
+    }
+}
+
+// Fonction pour convertir en minuscules
+void minus(char* mots) {
+    int i = 0;
+    while (mots[i] != '\0') {
+        if (mots[i] >= 'A' && mots[i] <= 'Z') {
+            mots[i] += 32;
+        }
+        i++;
+    }
+}
+
+// Fonction pour extraire une sous-chaîne
+void sous_chaine(const char* source, char* dest, int debut, int longeur) {
+    int len_source = longueur(source);
+
+    if (debut < 0 || debut >= len_source || longeur <= 0 || debut + longeur > len_source) {
+        std::cout << "Erreur : indices invalides." << std::endl;
+        dest[0] = '\0'; // Sous-chaîne vide en cas d'erreur
         return;
     }
-    for (int j = 0; j < longe; j++) {
+
+    for (int j = 0; j < longeur; j++) {
         dest[j] = source[debut + j];
     }
-    dest[longe] = '\0';
+    dest[longeur] = '\0';
 }
 
 int main() {
-     const int tail=1000;
-    int choix,n,i;
-    char m[tail], co[tail], a,sous,r;
-      std::cout << "Entrer :\n"
+    const int tail = 1000;
+    int choix, n, i;
+    char m[tail], co[tail], r;
+
+    std::cout << "Entrer :\n"
               << "1 : pour savoir la longueur du mot\n"
               << "2 : pour copier votre mot\n"
               << "3 : pour la concatenation de deux mots\n"
               << "4 : pour la comparaison de deux mots\n"
               << "5 : pour la recherche d'un caractere\n"
-              << "6 : pour inverser le mot\n"<<"7 : pour convertir le mots en magiscule\n"<<"8 : pour convertire le mots en minuscule\n" <<"9 : pour extraire une partie d'une phrase\n"<<std::endl;
+              << "6 : pour inverser le mot\n"
+              << "7 : pour convertir le mot en majuscules\n"
+              << "8 : pour convertir le mot en minuscules\n"
+              << "9 : pour extraire une partie d'une phrase\n"
+              << std::endl;
+
     std::cin >> choix;
 
     switch (choix) {
@@ -172,28 +176,40 @@ int main() {
                 std::cout << "Le caractère '" << r << "' n'existe pas dans le mot." << std::endl;
             }
         } break;
-        case 6:{ //inverse
-        int lon;
-        std::cout<<"entrer votre mot"<<std::endl;
-        std::cin>>m;
-        inverse(m);
-        std::cout<<"l'inverse de votre mots est "<<m<<std::endl;
-            }
-         break;
-         case 7:{ 
-            std::cout<<"entrer votre mot"<<std::endl;
-        std::cin>>m;
-        magiscul(m);
-        std::cout<<"votre mots en magiscule  est  "<<m<<std::endl;
-            }
-            break;
-            case 8:{ 
-            std::cout<<"entrer votre mot"<<std::endl;
-        std::cin>>m;
-        minus(m);
-        std::cout<<"votre mots en minuscule  est  "<<m<<std::endl;
-            }
-            break;
+
+        case 6: { // Inverse
+            std::cout << "Entrer votre mot : ";
+            std::cin >> m;
+            inverse(m);
+            std::cout << "L'inverse de votre mot est : " << m << std::endl;
+        } break;
+
+        case 7: { // Conversion en majuscules
+            std::cout << "Entrer votre mot : ";
+            std::cin >> m;
+            magiscul(m);
+            std::cout << "Votre mot en majuscules est : " << m << std::endl;
+        } break;
+
+        case 8: { // Conversion en minuscules
+            std::cout << "Entrer votre mot : ";
+            std::cin >> m;
+            minus(m);
+            std::cout << "Votre mot en minuscules est : " << m << std::endl;
+        } break;
+
+        case 9: { // Extraction de sous-chaîne
+            std::cout << "Entrez une phrase : ";
+            std::cin.ignore();
+            std::cin.getline(m, tail);
+            std::cout << "Entrez l'indice de debut : ";
+            std::cin >> i;
+            std::cout << "Entrez la longueur de la sous-chaine : ";
+            std::cin >> n;
+            sous_chaine(m, co, i, n);
+            std::cout << "Sous-chaîne extraite : " << co << std::endl;
+        } break;
+
         default:
             std::cout << "Option non valide !" << std::endl;
             break;
@@ -201,5 +217,3 @@ int main() {
 
     return 0;
 }
-
-
