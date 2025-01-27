@@ -1,0 +1,97 @@
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <stack>
+#include <windows.h> // Pour la gestion des couleurs
+
+using namespace std;
+
+// Dimensions du labyrinthe
+const int LARGEUR = 21;
+const int HAUTEUR = 21;
+
+// Déplacements possibles (haut, bas, gauche, droite)
+const int DX[] = {0, 0, -2, 2};
+const int DY[] = {-2, 2, 0, 0};
+
+// Fonction pour changer la couleur du texte
+void setColor(int color) {
+    SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+
+// Vérifie si une position est dans les limites du labyrinthe
+bool dansLesLimites(int x, int y) {
+    return x > 0 && x < HAUTEUR - 1 && y > 0 && y < LARGEUR - 1;
+}
+
+// Génère un labyrinthe avec DFS (Depth-First Search)
+void genererLabyrinthe(vector<vector<char>>& labyrinthe, int departX, int departY) {
+    stack<pair<int, int>> pile;
+    pile.push({departX, departY});
+    labyrinthe[departX][departY] = '=';
+
+    while (!pile.empty()) {
+        int x = pile.top().first;
+        int y = pile.top().second;
+        pile.pop();
+
+        vector<int> directions = {0, 1, 2, 3};
+        random_shuffle(directions.begin(), directions.end());
+
+        for (int i : directions) {
+            int nx = x + DX[i];
+            int ny = y + DY[i];
+
+            if (dansLesLimites(nx, ny) && labyrinthe[nx][ny] == '#') {
+                labyrinthe[x + DX[i] / 2][y + DY[i] / 2] = '=';
+                labyrinthe[nx][ny] = '=';
+                pile.push({nx, ny});
+            }
+        }
+    }
+}
+
+// Fonction pour afficher le labyrinthe avec couleurs
+void afficherLabyrinthe(const vector<vector<char>>& labyrinthe) {
+    for (int i = 0; i < HAUTEUR; i++) {
+        for (int j = 0; j < LARGEUR; j++) {
+            if (labyrinthe[i][j] == '#') {
+                setColor(12); // Rouge pour les murs
+                cout << "#";
+            } else if (i == 0 && j == 1) {
+                setColor(10); // Vert pour l'entrée
+                cout << "E";
+            } else if (i == HAUTEUR - 1 && j == LARGEUR - 2) {
+                setColor(9); // Bleu pour la sortie
+                cout << "S";
+            } else {
+                setColor(15); // Blanc pour les chemins
+                cout << "=";
+            }
+        }
+        cout << endl;
+    }
+    setColor(15); // Réinitialisation à blanc
+}
+
+int main() {
+    srand(time(0));
+
+    // Crée une grille pleine de murs
+    vector<vector<char>> labyrinthe(HAUTEUR, vector<char>(LARGEUR, '#'));
+
+    // Génère le labyrinthe à partir d'un point de départ
+    int departX = 1;
+    int departY = 1;
+    genererLabyrinthe(labyrinthe, departX, departY);
+
+    // Ajoute une entrée et une sortie
+    labyrinthe[0][1] = 'E';
+    labyrinthe[HAUTEUR - 1][LARGEUR - 2] = 'S';
+
+    // Affiche le labyrinthe avec les couleurs
+    afficherLabyrinthe(labyrinthe);
+
+    return 0;
+}
